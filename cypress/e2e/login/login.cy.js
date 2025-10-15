@@ -1,45 +1,77 @@
-describe('Casos de Teste de Login - Demoblaze', () => {
-  const usuarioPadrao = 'alisson';
-  const senhaPadrao = '123456!';
-  const senhaIncorreta = 'SenhaErrada!';
+// cypress/e2e/login.cy.js
 
-  before(() => {
-    cy.visit('https://www.demoblaze.com/');
-    cy.cadastrarUsuario(usuarioPadrao, senhaPadrao);
-    cy.once('window:alert', (str) => {
-      expect(str).to.match(/Sign up successful/i);
-    });
-    cy.wait(5000); // Tempo maior para garantir cadastro
+describe('Casos de Teste de Login - Demoblaze', () => {
+  const usuarioPadrao = 'AlissonTimo';
+  const senhaPadrao = '123456789@';
+  const senhaIncorreta = 'SenhaErrada!';
+  const usuarioInexistente = 'usuarioFake123';
+
+  // =====================================================
+  // 🔧 Comandos Reutilizáveis
+  // =====================================================
+  Cypress.Commands.add('fazerLogin', (usuario, senha) => {
+    cy.get('#login2').should('be.visible').click();
+    cy.get('#logInModal').should('be.visible');
+
+    if (usuario) cy.get('#loginusername').clear().type(usuario);
+    if (senha) cy.get('#loginpassword').clear().type(senha);
+
+    cy.contains('button', 'Log in').click();
   });
 
+  Cypress.Commands.add('logout', () => {
+    cy.contains('Log out').click({ force: true });
+    cy.get('#login2').should('be.visible');
+  });
+
+  // =====================================================
+  // 🔄 Recarregar página antes de cada cenário
+  // =====================================================
   beforeEach(() => {
     cy.visit('https://www.demoblaze.com/');
-    cy.get('#login2').click();
-    cy.get('#logInModal').should('be.visible');
   });
 
-  it('Login com sucesso: deve exibir o nome do usuário na página inicial', () => {
-  cy.get('#loginusername').type(usuarioPadrao);
-  cy.get('#loginpassword').type(senhaPadrao);
-  cy.get('button[onclick="logIn()"]').click();
+  // =====================================================
+  // 🧪 CENÁRIOS DE TESTE
+  // =====================================================
 
-  cy.get('#nameofuser', { timeout: 20000 }).should('be.visible');
-  cy.get('#nameofuser').should('contain', `Welcome ${usuarioPadrao}`);
+  // ✅ CT01 - Login com sucesso
+  it('CT01 - Login com sucesso: deve exibir o nome do usuário na página inicial', () => {
+    cy.fazerLogin(usuarioPadrao, senhaPadrao);
+
+    cy.contains(`Welcome ${usuarioPadrao}`, { timeout: 10000 })
+      .should('be.visible');
+
+    cy.contains('Log out').should('be.visible');
+
+    cy.screenshot('login-sucesso');
+    cy.logout(); // opcional
   });
 
-  it('Login com falha (senha incorreta): deve exibir alerta de erro', () => {
-  cy.get('#loginusername').type(usuarioPadrao);
-  cy.get('#loginpassword').type(senhaIncorreta);
-    cy.on('window:alert', (str) => {
-      expect(str).to.match(/Wrong password/i);
+  // ❌ CT02 - Login com falha (senha incorreta)
+  it('CT02 - Login com falha (senha incorreta): deve exibir alerta de erro', () => {
+    cy.on('window:alert', (msg) => {
+      expect(msg).to.match(/Wrong password/i);
     });
-    cy.get('button[onclick="logIn()"]').click();
+
+    cy.fazerLogin(usuarioPadrao, senhaIncorreta);
   });
 
-  it('Login com falha (campos vazios): deve exibir alerta de erro', () => {
-    cy.on('window:alert', (str) => {
-      expect(str).to.match(/Please fill out Username and Password/i);
+  // ❌ CT03 - Login com falha (campos vazios)
+  it('CT03 - Login com falha (campos vazios): deve exibir alerta de erro', () => {
+    cy.on('window:alert', (msg) => {
+      expect(msg).to.match(/Please fill out Username and Password/i);
     });
-    cy.get('button[onclick="logIn()"]').click();
+
+    cy.fazerLogin('', '');
+  });
+
+  // ❌ CT04 - Login com falha (usuário inexistente)
+  it('CT04 - Login com falha (usuário inexistente): deve exibir alerta de erro', () => {
+    cy.on('window:alert', (msg) => {
+      expect(msg).to.match(/User does not exist/i);
+    });
+
+    cy.fazerLogin(usuarioInexistente, senhaPadrao);
   });
 });
