@@ -11,8 +11,8 @@ Este projeto tem como objetivo validar o fluxo de login de um usuário, cobrindo
 
 1. **Clone o repositório:**
    ```bash
-   git clone <url-do-repositorio>
-   cd <nome-da-pasta>
+   git clone <https://github.com/timoalisson/trabalhoCursoIA.git>
+   
    ```
 
 2. **Instale as dependências:**
