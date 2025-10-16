@@ -1,19 +1,34 @@
-# Projeto de Validação de Login com Cypress
+# 🧪 Projeto de Validação de Login e Produtos com Cypress
 
-## Descrição do Projeto
-Este projeto tem como objetivo validar o fluxo de login de um usuário, cobrindo cenários de sucesso e falha. Utiliza testes automatizados para garantir que o sistema responda corretamente a diferentes situações de autenticação.
+![Cypress Tests](https://img.shields.io/badge/Cypress-Tests%20Passing-brightgreen?logo=cypress)
+![Node.js](https://img.shields.io/badge/Node.js-v18%2B-339933?logo=node.js&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-yellow?logo=javascript)
+![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
 
-## Tecnologias Utilizadas
+---
+
+## 📝 Descrição do Projeto
+Este projeto tem como objetivo validar fluxos essenciais de um **e-commerce**, cobrindo:
+- **Login de usuário** (sucesso e falha)
+- **Fluxo de produtos** (adicionar, remover, validar compra)
+
+Os testes automatizados foram criados com **Cypress**, garantindo que o sistema responda corretamente a diferentes situações de autenticação e manipulação de produtos no carrinho.
+
+---
+
+## 🚀 Tecnologias Utilizadas
 - [Cypress](https://www.cypress.io/) (testes end-to-end)
-- JavaScript/Node.js
+- JavaScript / Node.js
+- GitHub
 
-## Passos de Instalação e Execução
+---
+
+## ⚙️ Instalação e Execução
 
 1. **Clone o repositório:**
    ```bash
-   git clone <https://github.com/timoalisson/trabalhoCursoIA.git>
-   
-   ```
+   git clone https://github.com/timoalisson/trabalhoCursoIA.git
+
 
 2. **Instale as dependências:**
    ```bash
@@ -29,45 +44,84 @@ Este projeto tem como objetivo validar o fluxo de login de um usuário, cobrindo
    npx cypress run
    ```
 
-## Estrutura de Pastas
+📁 Estrutura de Pastas
 
 ```
-Trabalho Curso Ia/
+Trabalho Curso IA/
 ├── cypress/
-│   ├── integration/
-│   │   └── login.spec.js
+│   ├── e2e/
+│   │   ├── login.spec.js
+│   │   └── produto.cy.js
 │   ├── fixtures/
 │   └── support/
+│       └── commands.js
 ├── package.json
 ├── README.md
 └── ...
+
 ```
 
-## Licença
+🎯 Objetivo dos Testes
+
+Validar o fluxo de login e o fluxo de produtos na loja Demoblaze
+.
+
+Decisão da Ferramenta
+
+Optamos por usar Cypress por sua facilidade de uso, excelente documentação e capacidade de realizar testes end-to-end com alto desempenho e clareza nos relatórios.
+
+🔐 Casos de Teste — Login
+
+Login com sucesso:
+Acessar a página de login, preencher com credenciais válidas e verificar se o usuário é redirecionado corretamente.
+
+Login com falha (senha incorreta):
+Preencher com senha incorreta e validar se a mensagem de erro é exibida.
+
+Login com falha (campos vazios):
+Tentar logar sem preencher os campos e validar a exibição do alerta de erro.
+
+--
+
+🛒 Casos de Teste — Produtos
+
+Adicionar produto ao carrinho:
+Selecionar e adicionar um produto, verificando se ele aparece na listagem.
+
+Remover produto do carrinho:
+Adicionar e remover um item, garantindo que ele seja removido corretamente.
+
+Adicionar múltiplos produtos:
+Inserir diferentes produtos e confirmar se todos aparecem no carrinho.
+
+Validar preço total no carrinho:
+Verificar se o valor total corresponde à soma dos produtos.
+
+Fluxo completo de compra:
+Adicionar produtos, preencher dados e confirmar a mensagem de sucesso.
+
+Não permitir compra com campos vazios:
+Tentar finalizar sem preencher dados obrigatórios e validar a prevenção.
+
+Remover todos os produtos do carrinho:
+Adicionar múltiplos itens e removê-los, garantindo que o carrinho fique vazio.
+
+--
+
+✅ Critérios de Sucesso
+
+Todos os testes devem passar com sucesso no Cypress.
+
+O sistema deve apresentar mensagens e redirecionamentos corretos.
+
+Nenhum teste deve quebrar devido a falhas de fluxo.
+
+📄 Licença
 
 Este projeto está licenciado sob a Licença MIT.
+Sinta-se livre para usar, modificar e compartilhar.
 
----
+Alisson Timóteo
+📦 GitHub
 
-## Objetivo do Teste
-
-Validar o fluxo de login de um usuário (sucesso e falha).
-
-### Decisão da Ferramenta
-
-Optamos por usar Cypress por sua facilidade de uso, excelente documentação e a capacidade de rodar testes de ponta a ponta de forma estável. Além disso, ele se integra bem com o ecossistema JavaScript, o que facilita o desenvolvimento e a manutenção.
-
-### Casos de Teste (Cenários)
-
-- **Login com sucesso:**  
-  Acessar a página de login, preencher com credenciais válidas e verificar se o usuário é redirecionado para a página inicial com o nome de usuário exibido.
-
-- **Login com falha (senha incorreta):**  
-  Acessar a página de login, preencher com senha incorreta e verificar se a mensagem de erro é exibida.
-
-- **Login com falha (campos vazios):**  
-  Clicar em "login" sem preencher os campos e verificar se o alerta de erro é exibido.
-
-### Critérios de Sucesso
-
-Todos os cenários de teste devem passar.
+🧠 Projeto desenvolvido como exercício prático de QA e automação de testes com Cypress.
